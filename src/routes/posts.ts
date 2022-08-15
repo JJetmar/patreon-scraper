@@ -56,6 +56,7 @@ export const postsHandler: RouteHandler = async ({ request, body, crawler: { req
             url: postsUrlByCampaignId(campaignId, postsData.meta.pagination.cursors.next),
             label: RequestLabel.POSTS,
             headers: {
+                ...request.headers,
                 referer: request.headers!.referer,
             },
             userData: {

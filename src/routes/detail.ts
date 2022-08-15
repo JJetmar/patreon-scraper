@@ -65,6 +65,7 @@ export const detailHandler: RouteHandler = async ({ body, request, crawler: { re
         url: postsUrlByCampaignId(campaignId),
         label: RequestLabel.POSTS,
         headers: {
+            ...request.headers,
             referer: request.url,
         },
         userData: {
