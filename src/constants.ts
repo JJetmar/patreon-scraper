@@ -34,12 +34,12 @@ const postfixId = process.env.APIFY_ACTOR_RUN_ID ?? new Date().getTime().toStrin
 
 export const DATASET_NAMES = {
     get posts() {
-        return `${ACTOR_NAME}-posts-${postfixId}`;
+        return `${ACTOR_NAME}-${postfixId}-posts`;
     },
     get campaigns() {
-        return `${ACTOR_NAME}-campaigns-${postfixId}`;
+        return `${ACTOR_NAME}-${postfixId}-campaigns`;
     },
     get comments() {
-        return `${ACTOR_NAME}-comments-${postfixId}`;
+        return `${ACTOR_NAME}-${postfixId}-comments`;
     },
 };
