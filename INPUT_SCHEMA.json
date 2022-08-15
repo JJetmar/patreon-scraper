@@ -5,9 +5,10 @@
     "properties": {
         "campaigns": {
             "title": "Campaign names",
-            "type": "string",
+            "type": "array",
             "description": "Set Patreon campaign names/urls.",
-            "editor": "stringList"
+            "editor": "stringList",
+            "uniqueItems": true
         }
     },
     "required": []
