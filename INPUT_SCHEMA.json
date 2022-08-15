@@ -1,0 +1,14 @@
+{
+    "title": "Input schema for the Patreon actor.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "campaigns": {
+            "title": "Campaign names",
+            "type": "string",
+            "description": "Set Patreon campaign names/urls.",
+            "editor": "stringList"
+        }
+    },
+    "required": []
+}
