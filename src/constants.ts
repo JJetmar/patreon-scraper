@@ -1,12 +1,10 @@
 const ACTOR_NAME = `Patreon-crawler`;
 
 export enum RequestLabel {
-    BOOTSTRAP = 'BOOTSTRAP',
+    DETAIL = 'DETAIL',
     CAMPAIGN = 'CAMPAIGN',
     POSTS = 'POSTS',
 }
-
-export const POSTS_PAGE_SIZE = 50; // TODO to constants
 
 export const postsUrlByCampaignId = (campaignId: string, pageCursor?: string): string => {
     const postsUrl = new URL('https://www.patreon.com/api/posts');

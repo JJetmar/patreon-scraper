@@ -45,10 +45,9 @@ Actor.main(async () => {
 
     const crawler = new HttpCrawler({
         requestQueue,
-        maxRequestRetries: 10,
-        maxConcurrency: 10,
-        handleRequestTimeoutSecs: 10,
-        navigationTimeoutSecs: 10,
+        maxRequestRetries: 5,
+        handleRequestTimeoutSecs: 7,
+        navigationTimeoutSecs: 7,
         proxyConfiguration,
         additionalMimeTypes: ['application/vnd.api+json'],
         requestHandler,
@@ -62,7 +61,7 @@ Actor.main(async () => {
     await crawler.run(
         input?.campaigns.map((userInput) => new Request({
             url: campaignUrlByUserSlug(transformToUserSlug(userInput)),
-            label: RequestLabel.BOOTSTRAP,
+            label: RequestLabel.DETAIL,
         })),
     );
 });

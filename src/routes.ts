@@ -7,5 +7,5 @@ import { detailHandler } from './routes/detail.js';
 export const router = createHttpRouter();
 
 router.addHandler(RequestLabel.CAMPAIGN, campaignHandler);
-router.addHandler(RequestLabel.BOOTSTRAP, detailHandler);
+router.addHandler(RequestLabel.DETAIL, detailHandler);
 router.addHandler(RequestLabel.POSTS, postsHandler);
