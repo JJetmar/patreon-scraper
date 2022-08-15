@@ -33,9 +33,9 @@ const transformToUserSlug = (campaign: string): string => {
 
 const campaignUrlByUserSlug = (userSlug: string): string => `https://patreon.com/${userSlug}`;
 
-const proxyConfiguration = await Actor.createProxyConfiguration({
-    groups: ['RESIDENTIAL'],
-});
+// const proxyConfiguration = await Actor.createProxyConfiguration({
+//     groups: ['RESIDENTIAL'],
+// });
 
 Actor.main(async () => {
     const input = await Actor.getInput<Schema>();
@@ -50,7 +50,7 @@ Actor.main(async () => {
         maxConcurrency: 1,
         handleRequestTimeoutSecs: 5,
         navigationTimeoutSecs: 5,
-        proxyConfiguration,
+        // proxyConfiguration,
         additionalMimeTypes: ['application/vnd.api+json'],
         requestHandler,
         failedRequestHandler: (ctx) => {
