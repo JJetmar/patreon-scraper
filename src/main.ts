@@ -52,7 +52,7 @@ Actor.main(async () => {
         throw new CrawlerError('No proxy on input has been set for this run.');
     }
 
-    log('INPUT', input);
+    log.info('INPUT', input);
 
     const { proxyConfig } = input;
 
