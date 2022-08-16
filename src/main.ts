@@ -1,5 +1,5 @@
 import { Actor, RequestQueue } from 'apify';
-import { HttpCrawler, log, Request } from 'crawlee';
+import { HttpCrawler, Request } from 'crawlee';
 import { router as requestHandler } from './routes.js';
 import { RequestLabel } from './constants.js';
 import { CrawlerError } from './error/crawler-error.js';
@@ -39,8 +39,6 @@ const campaignUrlByUserSlug = (userSlug: string): string => `https://patreon.com
 
 Actor.main(async () => {
     const input = await Actor.getInput<InputSchema>();
-
-    log.info('INPUT', input);
 
     if (!input) {
         throw new CrawlerError('No input has been set for this run.');
