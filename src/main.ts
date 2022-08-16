@@ -1,5 +1,5 @@
 import { Actor, RequestQueue } from 'apify';
-import { HttpCrawler, Request } from 'crawlee';
+import {HttpCrawler, log, Request} from 'crawlee';
 import { router as requestHandler } from './routes.js';
 import { RequestLabel } from './constants.js';
 import { CrawlerError } from './error/crawler-error.js';
@@ -51,6 +51,8 @@ Actor.main(async () => {
     if (!input.proxyConfig) {
         throw new CrawlerError('No proxy on input has been set for this run.');
     }
+
+    log('INPUT', input);
 
     const { proxyConfig } = input;
 
