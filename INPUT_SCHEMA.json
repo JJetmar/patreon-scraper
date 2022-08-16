@@ -23,5 +23,8 @@
             "sectionDescription": "Select your proxy here. Use Residential for scrapping without login, but automatic for scraping with login! You can also change the maximum times the browser will retry requests and tell it how long to wait for the page to scroll."
         }
     },
-    "required": []
+    "required": [
+        "proxy",
+        "campaigns"
+    ]
 }
