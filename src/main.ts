@@ -1,12 +1,12 @@
 import { Actor, RequestQueue } from 'apify';
-import {HttpCrawler, log, Request} from 'crawlee';
+import { HttpCrawler, log, Request } from 'crawlee';
 import { router as requestHandler } from './routes.js';
 import { RequestLabel } from './constants.js';
 import { CrawlerError } from './error/crawler-error.js';
 
 interface InputSchema {
     campaigns: Array<string>;
-    proxyConfig: {
+    proxy: {
         'useApifyProxy': boolean,
         'apifyProxyGroups': string[]
     };
@@ -40,6 +40,8 @@ const campaignUrlByUserSlug = (userSlug: string): string => `https://patreon.com
 Actor.main(async () => {
     const input = await Actor.getInput<InputSchema>();
 
+    log.info('INPUT', input);
+
     if (!input) {
         throw new CrawlerError('No input has been set for this run.');
     }
@@ -48,18 +50,18 @@ Actor.main(async () => {
         throw new CrawlerError('No campaigns on input has been set for this run.');
     }
 
-    if (!input.proxyConfig) {
+    if (!input.proxy) {
         throw new CrawlerError('No proxy on input has been set for this run.');
     }
 
-    log.info('INPUT', input);
-
-    const { proxyConfig } = input;
+    const { proxy } = input;
 
     let proxyConfiguration;
 
     try {
-        proxyConfiguration = await Actor.createProxyConfiguration(proxyConfig);
+        proxyConfiguration = await Actor.createProxyConfiguration({
+            ...proxy,
+        });
     } catch (e) {
         throw new CrawlerError(`Problem during setup up a proxy server.`, { cause: e });
     }
