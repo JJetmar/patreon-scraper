@@ -1,15 +1,21 @@
-# Patreon Scraper
+# Patreon Actor for Apify platform
 
 Currently capable of scraping Campaigns and Posts.
 
+## Input
+Set a list of campaigns, You can use whole address or just the campaign name itself.
+
+Correct examples:
+- DankPods
+- https://patreon.com/DankPods
+- patreon.com/DankPods
+
 ## Scraping flow
 ```
-Actor --Campaign name--> Detail
-Detail --campaignId--> Campaign
-Detail --campaignId--> Posts
-Posts --(until all posts loaded)--> Posts
-
-End
+Actor  ---------- campaignName ----------> Detail
+Detail ----------- campaignId -----------> Campaign
+Detail ----------- campaignId -----------> Posts
+Posts  -- (until all posts are loaded) --> Posts
 ```
 
 ## TODO

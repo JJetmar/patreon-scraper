@@ -1,11 +1,15 @@
 import { Actor, RequestQueue } from 'apify';
 import { HttpCrawler, Request } from 'crawlee';
-import log from '@apify/log';
 import { router as requestHandler } from './routes.js';
 import { RequestLabel } from './constants.js';
+import { CrawlerError } from './error/crawler-error.js';
 
-interface Schema {
-    campaigns?: Array<string>;
+interface InputSchema {
+    campaigns: Array<string>;
+    proxyConfig: {
+        'useApifyProxy': boolean,
+        'apifyProxyGroups': string[]
+    };
 }
 
 /**
@@ -33,13 +37,30 @@ const transformToUserSlug = (campaign: string): string => {
 
 const campaignUrlByUserSlug = (userSlug: string): string => `https://patreon.com/${userSlug}`;
 
-const proxyConfiguration = await Actor.createProxyConfiguration({
-    groups: ['RESIDENTIAL'],
-});
-
 Actor.main(async () => {
-    const input = await Actor.getInput<Schema>();
-    log.info('Input:', input);
+    const input = await Actor.getInput<InputSchema>();
+
+    if (!input) {
+        throw new CrawlerError('No input has been set for this run.');
+    }
+
+    if (!(input?.campaigns?.length)) {
+        throw new CrawlerError('No campaigns on input has been set for this run.');
+    }
+
+    if (!input.proxyConfig) {
+        throw new CrawlerError('No proxy on input has been set for this run.');
+    }
+
+    const { proxyConfig } = input;
+
+    let proxyConfiguration;
+
+    try {
+        proxyConfiguration = await Actor.createProxyConfiguration(proxyConfig);
+    } catch (e) {
+        throw new CrawlerError(`Problem during setup up a proxy server.`, { cause: e });
+    }
 
     const requestQueue = await RequestQueue.open();
 
@@ -54,13 +75,9 @@ Actor.main(async () => {
         persistCookiesPerSession: true,
     });
 
-    if (!input?.campaigns?.length) {
-        throw Error('No campaign have been set on input');
-    }
-
     await crawler.run(
-        input?.campaigns.map((userInput) => new Request({
-            url: campaignUrlByUserSlug(transformToUserSlug(userInput)),
+        input?.campaigns.map((campaignInput) => new Request({
+            url: campaignUrlByUserSlug(transformToUserSlug(campaignInput)),
             label: RequestLabel.DETAIL,
         })),
     );
